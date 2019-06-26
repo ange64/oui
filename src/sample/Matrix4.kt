@@ -7,10 +7,11 @@ class Matrix4 {
 
     private val values = Array(4) { Array(4) { 0.0 } }
 
-    fun add(matrix4: Matrix4) {
+    fun add(matrix4: Matrix4) : Matrix4{
         this.foreachIndexed2d { i, j, _ ->
             values[i][j] += matrix4.values[i][j]
         }
+        return this
     }
 
     operator fun get(i : Int, j : Int) : Double{
@@ -26,11 +27,7 @@ class Matrix4 {
             this.values[i][j] = values[(i*4)+j]
         }
     }
-
-    fun add(i : Int, j : Int, value : Double) {
-        set(i,j, this[i, j] + value)
-    }
-
+    
     fun set( matrix : Matrix4){
         matrix.values.forEachIndexed { i, row ->
             row.forEachIndexed { j, value ->
