@@ -4,10 +4,11 @@ class Camera : Movable(){
 
     val projection = Matrix4.projection2d
 
-    val combined : Matrix4
-        get() = Matrix4().add(transation)
-
     init {
-
     }
+
+    val combined  : Matrix4
+        get() =  translation.cpy().mul(rotation).mul(projection)
+
+
 }
