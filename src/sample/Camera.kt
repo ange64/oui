@@ -1,14 +1,14 @@
 package sample
 
-class Camera : Movable(){
+class Camera : Transformable(){
 
     val projection = Matrix4.projection2d
 
     init {
     }
 
-    val combined  : Matrix4
-        get() =  translation.cpy().mul(rotation).mul(projection)
+    override val combined  : Matrix4
+        get() =  super.combined.mul(projection)
 
 
 }
