@@ -1,22 +1,10 @@
 package sample
 
 
-class Triangle(val vertice1 : Vector4, val vertice2 : Vector4, val vertice3 : Vector4) : Transformable() {
-
-    private val origin = Vector4()
-
-
-
-
-
+class Triangle(val vertex1 : Vertex3d, val vertex2 : Vertex3d, val vertex3 : Vertex3d) : Transformable() {
 
     override fun toString(): String {
-        return "[ $vertice1 , $vertice2, $vertice3 ]"
-    }
-
-
-    fun project(matrix4: Matrix4) : DoubleArray{
-        return vertice1.project(matrix4) + vertice2.project(matrix4) + vertice3.project(matrix4)
+        return "[ $vertex1 , $vertex2, $vertex3 ]"
     }
 
 

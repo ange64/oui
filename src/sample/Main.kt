@@ -12,6 +12,7 @@ import javafx.stage.Stage
 class Main : Application() {
     val root = Group()
     val camera = Camera()
+    val drawer  = ModelDrawer(root)
 
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
@@ -19,27 +20,21 @@ class Main : Application() {
         primaryStage.title = "Hello World"
         primaryStage.scene = Scene(root, 500.0, 500.0)
         var triangle = Triangle(
-                Vector4(-100,-100,0),
-                Vector4(0,100,0),
-                Vector4(100,-100,0)
+                Vertex3d(-100,-100,0),
+                Vertex3d(0,100,0),
+                Vertex3d(100,-100,0)
         )
 
         camera.translate(100.0,100.0,0.0)
-        camera.rotate(45.0,0.0,0.0)
+        camera.setRotationZ(1.0)
 
         primaryStage.show()
         println(camera.combined)
 
-        drawTriangle(triangle)
+        drawer.draw(triangle,camera)
     }
 
-    fun drawTriangle(triangle: Triangle){
-        val shape = Polygon()
-        triangle.project(camera.combined).forEachIndexed { i , vertex ->
-            shape.points.add(i,vertex)
-        }
-        root.children.add(shape)
-    }
+
 
 
 
