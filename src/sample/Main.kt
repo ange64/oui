@@ -1,5 +1,6 @@
 package sample
 
+import javafx.animation.AnimationTimer
 import javafx.application.Application
 import javafx.scene.Group
 
@@ -11,36 +12,32 @@ import javafx.stage.Stage
 
 class Main : Application() {
     val root = Group()
+    lateinit var camera : Camera
+    val drawer  = ModelDrawer(root)
+
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
 
+
         primaryStage.title = "Hello World"
-        primaryStage.scene = Scene(root, 1000.0, 1000.0)
+        primaryStage.scene = Scene(root, 500.0, 500.0)
         var triangle = Triangle(
-                Vector4(-100,-100,0),
-                Vector4(0,100,0),
-                Vector4(100,-100,0)
+                Vertex3d(-1,-1,0),
+                Vertex3d(0,1,0),
+                Vertex3d(1,-1,0)
         )
 
-
         primaryStage.show()
+        camera = Camera(primaryStage.scene.width,primaryStage.scene.height)
 
-        drawTriangle(triangle)
+
+        triangle.position.x += 0
+        triangle.position.y += 0
+        triangle.position.z += 1
+
+        drawer.projectionMatrix = camera.combined
+        drawer.draw(triangle)
     }
-
-    fun drawTriangle(triangle: Triangle){
-        val shape = Polygon()
-        triangle.project(Matrix4.projection2d).forEachIndexed { i , vertex ->
-            shape.points.add(i,vertex)
-        }
-        println(triangle)
-
-        root.children.add(shape)
-    }
-
-
-
-
 
     companion object {
 
@@ -49,6 +46,4 @@ class Main : Application() {
             launch(Main::class.java)
         }
     }
-
-
 }
