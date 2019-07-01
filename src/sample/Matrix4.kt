@@ -1,8 +1,5 @@
 package sample
 
-import kotlin.math.cos
-import kotlin.math.sin
-
 class Matrix4() {
 
     private val values = Array(4) { Array(4) { 0.0 } }
@@ -51,13 +48,13 @@ class Matrix4() {
         val tmp = Matrix4(this)
         for( i in 0..3) {
             for( j in 0..3){
-                this[i,j] = 0.0
+                tmp[i,j] = 0.0
                 for ( k in 0..3){
-                    this[i,j] += tmp[i,k] * m[k,j]
+                    tmp[i,j] += this[i,k] * m[k,j]
                 }
             }
         }
-        return this
+        return tmp
     }
 
     override fun toString(): String {
@@ -72,8 +69,9 @@ class Matrix4() {
         return string
     }
 
-
-
+    fun mul(matrix: Matrix4) : Matrix4{
+        return this.set(this * matrix)
+    }
 
     companion object{
         fun identity() : Matrix4 {

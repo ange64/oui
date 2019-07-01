@@ -2,29 +2,29 @@ package sample
 
 class Camera( var windowWidth : Double, var windowHeight : Double ) : Transformable() {
 
-    val projection = Matrix4.identity()
+    val projectionMatrix = Matrix4.identity()
+    val viewPortMatrix = Matrix4()
     val near = 0.1
-    val far = 100.0
-    val l : Double
-        get() = windowWidth /2 - windowWidth
-    val r : Double
-        get() = windowWidth /2
-    val t : Double
-        get() = windowHeight /2 - windowHeight
-    val b : Double
-        get() = windowHeight /2
+    val far = 10.0
 
+    val viewMatrix : Matrix4
+        get() = super.combined
 
     init {
-        projection[0, 2] = (r + l) / (r - l)
-        projection[1, 2] = (t + b) / (t - b)
-        projection[2, 2] = -(far + near) / (far - near)
-        projection[2, 3] = -(2 * far * near / (far - near))
-        projection[3, 2] = -1.0
-        projection[3, 3] = 0.0
-    }
+        projectionMatrix[0, 0] = near
+        projectionMatrix[1, 1] = near
+        projectionMatrix[2, 2] = -(far + near) / (far - near)
+        projectionMatrix[2, 3] = -(2 * far * near / (far - near))
+        projectionMatrix[3, 2] = -1.0
+        projectionMatrix[3, 3] = 0.0
 
-    override val combined: Matrix4
-        get() = super.combined * projection
+        viewPortMatrix[0,0] = windowWidth/2
+        viewPortMatrix[0,3] = windowWidth/2
+        viewPortMatrix[1,1] = windowHeight/2
+        viewPortMatrix[1,3] = windowHeight/2
+        viewPortMatrix[2,2] = 1.0/2
+        viewPortMatrix[2,3] = 1.0/2
+        viewPortMatrix[3,3] = 1.0
+    }
 
 }

@@ -11,7 +11,7 @@ abstract class Transformable {
     val position = Vertex3d()
     val scale = Vertex3d(1,1,1)
 
-    open val combined: Matrix4
+    protected open val combined: Matrix4
         get() {
             val translation = Matrix4.identity()
             val rotationX = Matrix4.identity()

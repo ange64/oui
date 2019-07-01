@@ -5,15 +5,12 @@ import javafx.application.Application
 import javafx.scene.Group
 
 import javafx.scene.Scene
-import javafx.scene.shape.Polygon
-import javafx.scene.shape.Shape
-import javafx.scene.shape.TriangleMesh
 import javafx.stage.Stage
 
 class Main : Application() {
     val root = Group()
     lateinit var camera : Camera
-    val drawer  = ModelDrawer(root)
+    lateinit var  drawer  : ModelDrawer
 
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
@@ -29,14 +26,21 @@ class Main : Application() {
 
         primaryStage.show()
         camera = Camera(primaryStage.scene.width,primaryStage.scene.height)
+        drawer = ModelDrawer(root, camera)
 
 
         triangle.position.x += 0
         triangle.position.y += 0
-        triangle.position.z += 1
+        triangle.position.z += -1
 
-        drawer.projectionMatrix = camera.combined
-        drawer.draw(triangle)
+
+
+        val lol =  object: AnimationTimer(){
+            override fun handle(p0: Long) {
+                triangle.rotation.y += 0.01
+                drawer.draw(triangle)
+            }
+        }.start()
     }
 
     companion object {
