@@ -4,7 +4,7 @@ class Camera( var windowWidth : Double, var windowHeight : Double ) : Transforma
 
     val projectionMatrix = Matrix4.identity()
     val viewPortMatrix = Matrix4()
-    val near = 0.1
+    val near = 1.0
     val far = 10.0
 
     val viewMatrix : Matrix4

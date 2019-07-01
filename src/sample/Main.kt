@@ -9,8 +9,8 @@ import javafx.stage.Stage
 
 class Main : Application() {
     val root = Group()
-    lateinit var camera : Camera
-    lateinit var  drawer  : ModelDrawer
+    lateinit var camera: Camera
+    lateinit var drawer: ModelDrawer
 
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
@@ -18,27 +18,29 @@ class Main : Application() {
 
         primaryStage.title = "Hello World"
         primaryStage.scene = Scene(root, 500.0, 500.0)
-        var triangle = Triangle(
-                Vertex3d(-1,-1,0),
-                Vertex3d(0,1,0),
-                Vertex3d(1,-1,0)
-        )
 
         primaryStage.show()
-        camera = Camera(primaryStage.scene.width,primaryStage.scene.height)
+        camera = Camera(primaryStage.scene.width, primaryStage.scene.height)
         drawer = ModelDrawer(root, camera)
 
+        val teapot = Teapot()
+        val cube = Cube()
+        teapot.position.z = -2.0
+        teapot.position.y = 1.0
+        cube .position.z = -5.0
+        cube .position.y = -1.0
+        camera.origin.set(0.0,0.0,-10.0)
 
-        triangle.position.x += 0
-        triangle.position.y += 0
-        triangle.position.z += -1
 
-
-
-        val lol =  object: AnimationTimer(){
+        val lol = object : AnimationTimer() {
             override fun handle(p0: Long) {
-                triangle.rotation.y += 0.01
-                drawer.draw(triangle)
+                drawer.clear()
+                drawer.draw(teapot)
+                drawer.draw(cube)
+                //teapot.rotation.y += 0.01
+                //cube.rotation.y -= 0.01
+                camera.rotation.y += 0.01
+
             }
         }.start()
     }
